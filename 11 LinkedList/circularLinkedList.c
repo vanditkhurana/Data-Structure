@@ -25,23 +25,95 @@ void Create(int a[], int n){
     }
 }
 
-void Display(struct Node *h){
+void Display(struct Node *p){
     do
     {
-        printf("%d --> ", h->data);
-        h = h->next;
-    } while (h != head);
+        printf("%d --> ", p->data);
+        p = p->next;
+    } while (p != head);
     printf("\n");
 }
 
-void RecDisplay(struct Node *h){
+void RecDisplay(struct Node *p){
     static int flag = 0;
-    if (h != head || flag == 0){
+    if (p != head || flag == 0){
         flag = 1;
-        printf("%d ", h->data);
-        RecDisplay(h->next);
+        printf("%d ", p->data);
+        RecDisplay(p->next);
     }
     flag = 0;
+}
+
+int Count(struct Node *p){
+    int len = 0;
+    do
+    {
+        len++;
+        p = p->next;
+    } while (p != head);
+    return len;
+}
+
+void Insert(struct Node *p, int pos, int val){
+    struct Node *t;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = val;
+
+    if (pos < 0 || pos > Count(head))
+        return;
+    if (pos == 0){
+        if (head == NULL){
+            head = t;
+            head->next = head;
+        }
+        else{
+            while(p->next != head)
+                p = p->next;
+            p->next = t;
+            t->next = head;
+            head = t;
+        }
+    }
+    else{
+        for (int i = 0; i < pos - 1; i++)
+            p = p->next;
+        t->next = p->next;
+        p->next = t;
+    }
+}
+
+int Delete(struct Node *p, int pos){
+    struct Node * q;
+    int x;
+    if (pos < 0 || pos > Count(head))
+        return - 1;
+    if(pos == 1){
+        while(p->next != head)
+            p = p->next;
+        x = head->data;
+        if (head == p){
+            free(head);
+            head = NULL;
+        }
+        else{
+        p->next = head->next;
+        free(head);
+        head = p->next;
+        }
+        return x;
+    }
+    else{
+        for (int i = 0; i < pos - 2; i++)
+        {
+            p = p->next;
+        }
+        q = p->next;
+        p->next = q->next;
+        x = q->data;
+        free(q);
+        return x;
+    }
+
 }
 
 int main(){
@@ -54,5 +126,13 @@ int main(){
 
     // Display using Recursion Approach
     RecDisplay(head);
+
+    // Insertion at a position
+    Insert(head, 3, 17);
+    Display(head);
+ 
+    // Deletion at a position
+    printf("%d Deleted\n", Delete(head, 5));
+    Display(head);
     return 0;
 }
