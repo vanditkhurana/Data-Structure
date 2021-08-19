@@ -94,22 +94,26 @@ int Delete(struct Node *p, int pos){
     }
 }
 
+void Reverse(struct Node * p){
+    struct Node * temp;
+    while (p)
+    {
+        temp = p->next;
+        p->next = p->prev;
+        p->prev = temp;
+        p = p->prev;
+        if (p != NULL && p->next == NULL)
+            first = p;
+    }
+}
+
 int main(){
 
     int a[] = {10, 20, 30, 40, 50};
     // Create Doubly Linked List
     Create(a, 5);
-    // printf("Length = %d\n", Count(first));
-    // Display(first);
-
-    // Insert in Doubly Linked List
-    // Insert(first, 2, 25);
-    // Display(first);
-
-    // Deletion in Doubly Linked List
-    // printf("%d Deleted\n", Delete(first, 1));
-    printf("%d Deleted\n", Delete(first, 3));
-
+ 
+    Reverse(first);
     Display(first);
 
     return 0;
