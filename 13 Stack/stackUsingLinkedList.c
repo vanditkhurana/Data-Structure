@@ -34,7 +34,6 @@ void Push(int x){
         top = t;
         printf("%d Pushed Successfully\n", x);
     }
-
 }
 
 int Peek(int pos){
