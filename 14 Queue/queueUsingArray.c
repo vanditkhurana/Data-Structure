@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
+// Create a Structure of Queue
 struct Queue{
     int size;
     int rear;
@@ -8,12 +10,14 @@ struct Queue{
     int *Q;
 };
 
+// Create a Queue with Desired size
 void Create(struct Queue *q, int size){
     q->size = size;
     q->rear = q->front = -1;
     q->Q = (int *)malloc(q->size * sizeof(int));  
 }
 
+// Display of elements in Queue
 void Display(struct Queue q){
     if (q.front == q.rear)
         printf("Queue is Empty");
@@ -25,18 +29,21 @@ void Display(struct Queue q){
     printf("\n");
 }
 
+// Return 1 if Queue is Empty else return 0
 int isEmpty(struct Queue q){
     if (q.front == q.rear)
         return 1;
     return 0;
 }
 
+// Return 1 if Queue is Full else return 0
 int isFull(struct Queue q){
     if (q.rear >= q.size-1)
         return 1;
     return 0;
 }
 
+// Insert Elements in Queue
 void Enqueue(struct Queue *q, int val){
     if (isFull(*q))
         printf("Queue Overflow\n");
@@ -47,6 +54,7 @@ void Enqueue(struct Queue *q, int val){
     }
 }
 
+// Delete Elements from Queue
 int Dequeue(struct Queue *q){
     int x = -1;
     if (isEmpty(*q)){
@@ -60,7 +68,7 @@ int Dequeue(struct Queue *q){
     }
 }
 
-
+// Main function with some operations of above described functions
 int main(){
     
     // Create a Queue
